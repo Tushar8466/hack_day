@@ -72,8 +72,9 @@
     --radius-full:         9999px;
 
     /* ── Fonts ── */
-    --font-heading:        var(--font-space-grotesk), 'Space Grotesk', system-ui, sans-serif;
-    --font-body:           var(--font-plus-jakarta-sans), 'Plus Jakarta Sans', system-ui, sans-serif;
+    /* ── Fonts ── */
+    --font-heading:        var(--font-geist-sans), system-ui, sans-serif;
+    --font-body:           var(--font-geist-sans), system-ui, sans-serif;
     --font-sans:           var(--font-body);
   }
 
