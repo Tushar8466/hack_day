@@ -35,7 +35,7 @@ const BENGALURU: [number, number] = [12.9716, 77.5946];
 
 // Leaflet map — client only (needs window / DOM)
 const LeafletMap = dynamic(
-  () => import("@/components/chargemate/leaflet-map").then((m) => m.LeafletMap),
+  () => import("@/components/rider/spot-map").then((m) => m.SpotMap),
   { ssr: false, loading: () => <MapSkeleton /> }
 );
 
@@ -90,6 +90,7 @@ export default function ExplorePage() {
   const [selectedSpotId, setSelectedSpotId] = React.useState<string | null>(null);
   const [showFilters, setShowFilters] = React.useState(false);
   const [sosLoading, setSosLoading] = React.useState(false);
+  const [locationRevision, setLocationRevision] = React.useState(0);
 
   const selectedVehicle = vehicles.find((v) => v.id === selectedVehicleId) ?? null;
 
@@ -111,7 +112,14 @@ export default function ExplorePage() {
       },
       { timeout: 5000, enableHighAccuracy: false }
     );
-  }, []);
+  }, [locationRevision]);
+
+  function recenter() {
+    setGeoLoading(true);
+    setGeoError(null);
+    setUserPos(BENGALURU);
+    setLocationRevision((revision) => revision + 1);
+  }
 
   // ── Load vehicles ──────────────────────────────────────────────────────────
   React.useEffect(() => {
@@ -150,7 +158,7 @@ export default function ExplorePage() {
   }, [spots, selectedVehicle, batteryPct]);
 
   // Spots to show on map (all online spots — dimmed on list if unreachable)
-  const mapSpots = spots.filter((s) => s.is_online);
+  const mapSpots = spots;
 
   // ── SOS CHARGE ─────────────────────────────────────────────────────────────
   function handleSOS() {
@@ -451,14 +459,14 @@ export default function ExplorePage() {
       {/* ── Right: Map ───────────────────────────────────────────────────── */}
       <div
         id="explore-map-container"
-        className="flex-1 order-1 md:order-2 h-[50vh] md:h-full relative"
+        className="flex-1 order-1 md:order-2 h-[50vh] md:h-full min-h-[320px] relative"
       >
         <LeafletMap
           center={userPos}
           spots={mapSpots}
           selectedSpotId={selectedSpotId}
           onMarkerClick={(id) => setSelectedSpotId((prev) => (prev === id ? null : id))}
-          className="w-full h-full"
+          onRecenter={recenter}
         />
 
         {/* Selected spot float */}
