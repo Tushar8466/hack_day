@@ -35,7 +35,8 @@ let MOCK_WALLET_BALANCE = 250; // INR
  * Creates a payment order for a booking.
  * Real version: hits Razorpay order creation API.
  */
-export async function createPayment(bookingId: string): Promise<PaymentOrder> {
+export async function createPayment(_bookingId: string): Promise<PaymentOrder> {
+  void _bookingId;
   // Mock: always creates an order for ₹150 (the session estimate)
   return {
     orderId: `order_mock_${Date.now()}`,
