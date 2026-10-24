@@ -49,7 +49,7 @@ export async function FeaturedHostSection() {
           role="list"
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
         >
-          {featured.map((spot, i) => (
+          {featured.map((spot) => (
             <li key={spot.id}>
               <article
                 aria-label={spot.title}
