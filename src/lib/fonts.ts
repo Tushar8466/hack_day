@@ -1,15 +1,7 @@
-import { Space_Grotesk, Plus_Jakarta_Sans } from "next/font/google";
+// src/lib/fonts.ts
+import { GeistSans } from "geist/font/sans";
 
-export const heading = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-heading",
-  display: "swap",
-  weight: ["600", "700"],
-});
-
-export const body = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  variable: "--font-body",
-  display: "swap",
-  weight: ["400", "500", "600", "700"],
-});
+// Same export names, so layout.tsx keeps working.
+// GeistSans.variable defines --font-geist-sans, so we alias it below.
+export const heading = GeistSans;
+export const body = GeistSans;

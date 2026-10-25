@@ -192,6 +192,7 @@ export async function submitHostOnboarding(
   userId: string,
   _idDocFile: File
 ): Promise<HostProfile> {
+  void _idDocFile;
   await new Promise((r) => setTimeout(r, 700));
 
   const existing = HOST_PROFILES.find((h) => h.user_id === userId);

@@ -2,7 +2,7 @@
 
 import {
   Zap, Home, Star, IndianRupee, Battery, TrendingUp,
-  Plug, CheckCircle, AlertTriangle, Info,
+  Plug,
 } from "lucide-react";
 import {
   Button,
