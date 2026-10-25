@@ -2,15 +2,23 @@
 // Person 3 owns this file.
 
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { createServerClient } from "@/lib/supabase/server";
 import { Bell } from "lucide-react";
 import { ModeProvider } from "@/lib/mode-context";
 import { HostSidebar } from "@/components/layout/host-sidebar";
+import { SignOutButton } from "@/components/auth/sign-out-button";
 
 export const metadata: Metadata = {
   title: { default: "Host Dashboard — ChargeMate", template: "%s | Host · ChargeMate" },
 };
 
-export default function HostLayout({ children }: { children: React.ReactNode }) {
+export default async function HostLayout({ children }: { children: React.ReactNode }) {
+  if (process.env.NEXT_PUBLIC_USE_MOCK !== "true") {
+    const supabase = await createServerClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) redirect("/login");
+  }
   return (
     <ModeProvider defaultMode="host">
       <div className="min-h-screen bg-background">
@@ -32,6 +40,7 @@ export default function HostLayout({ children }: { children: React.ReactNode }) 
               </span>
             </div>
             <div className="flex items-center gap-md">
+              <SignOutButton />
               <button
                 aria-label="Notifications"
                 className="relative p-sm rounded-full bg-recessed text-muted-foreground hover:text-foreground transition-colors"

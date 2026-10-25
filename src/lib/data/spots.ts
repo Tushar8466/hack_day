@@ -18,7 +18,7 @@ const MOCK_SPOTS: ChargingSpot[] = [
     connector:      "Type2",
     price_per_kwh:  12,
     photos:         [
-      "https://images.unsplash.com/photo-1593941707882-a56f1f27b0b8?w=800",
+      "/images/charging-plug.jpg",
     ],
     rules:          "No parking after 22:00. Ring bell on arrival.",
     available_from: "07:00",
@@ -69,7 +69,7 @@ const MOCK_SPOTS: ChargingSpot[] = [
     connector:      "CCS2",
     price_per_kwh:  14,
     photos:         [
-      "https://images.unsplash.com/photo-1593941707882-a56f1f27b0b8?w=800",
+      "/images/charging-plug.jpg",
     ],
     rules:          "Gate code shared after booking. Covered parking available.",
     available_from: "08:00",
@@ -118,7 +118,7 @@ const MOCK_SPOTS: ChargingSpot[] = [
     connector:      "Type2",
     price_per_kwh:  13,
     photos:         [
-      "https://images.unsplash.com/photo-1593941707882-a56f1f27b0b8?w=800",
+      "/images/charging-plug.jpg",
     ],
     rules:          "Parking spot C-4 reserved. Vehicle must stay during charging.",
     available_from: "07:00",

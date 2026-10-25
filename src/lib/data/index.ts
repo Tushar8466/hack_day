@@ -16,7 +16,7 @@
 export { MOCK_HOST_ID, MOCK_RIDER_ID } from "./constants";
 
 // ── Switch ────────────────────────────────────────────────────────────────────
-const _USE_MOCK = process.env.NEXT_PUBLIC_USE_MOCK === "true";
+const USE_MOCK = (process.env.NEXT_PUBLIC_USE_MOCK ?? "true") === "true";
 
 // ── Bookings — conditional real/mock ──────────────────────────────────────────
 import * as mockBookings from "./bookings";

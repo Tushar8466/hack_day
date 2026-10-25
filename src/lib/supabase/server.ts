@@ -3,7 +3,6 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { createServerClient as _createServerClient } from "@supabase/ssr";
-import { createClient } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
 import type { Database } from "./types";
 
@@ -22,16 +21,5 @@ export async function createServerClient() {
         catch { /* read-only in Server Components — middleware refreshes */ }
       },
     },
-  });
-}
-
-/** Admin client using service_role key — never expose to browser. */
-export function createAdminClient() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !key) throw new Error("Missing Supabase admin env vars.");
-
-  return createClient<Database>(url, key, {
-    auth: { autoRefreshToken: false, persistSession: false },
   });
 }
