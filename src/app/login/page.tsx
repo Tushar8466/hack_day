@@ -7,6 +7,7 @@
 
 import { useState, useRef, KeyboardEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { createBrowserClient } from "@/lib/supabase/client";
 import { Zap, Shield, ArrowRight, RefreshCw, MessageCircle, Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { sendOtp, verifyOtp, signInWithGoogle, DEV_OTP } from "@/lib/data/auth";
@@ -107,6 +108,18 @@ export default function LoginPage() {
     setError("");
     setLoading(true);
     try {
+      if (!USE_MOCK) {
+        const supabase = createBrowserClient();
+        const { error } = await supabase.auth.signInWithOAuth({
+          provider: "google",
+          options: {
+            redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent("/explore")}`,
+          },
+        });
+        if (error) throw error;
+        return;
+      }
+
       const { session, isNewUser } = await signInWithGoogle();
       const { getProfileById } = await import("@/lib/data/auth");
       const profile = await getProfileById(session.userId);

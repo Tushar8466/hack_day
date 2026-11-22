@@ -4,10 +4,13 @@
 // Do NOT change the route group name or the ModeProvider import.
 
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { createServerClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { Zap } from "lucide-react";
 import { ModeProvider } from "@/lib/mode-context";
 import { ModeSwitcher } from "@/components/chargemate";
+import { SignOutButton } from "@/components/auth/sign-out-button";
 
 export const metadata: Metadata = {
   title: {
@@ -16,7 +19,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RiderLayout({ children }: { children: React.ReactNode }) {
+export default async function RiderLayout({ children }: { children: React.ReactNode }) {
+  if (process.env.NEXT_PUBLIC_USE_MOCK !== "true") {
+    const supabase = await createServerClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) redirect("/login");
+  }
   return (
     <ModeProvider defaultMode="charge">
       <div className="min-h-screen bg-background flex flex-col">
@@ -38,7 +46,10 @@ export default function RiderLayout({ children }: { children: React.ReactNode })
             </Link>
 
             {/* Mode switcher pill — syncs across rider + host layouts */}
-            <ModeSwitcher />
+            <div className="flex items-center gap-3">
+              <ModeSwitcher />
+              <SignOutButton />
+            </div>
           </div>
         </header>
 
